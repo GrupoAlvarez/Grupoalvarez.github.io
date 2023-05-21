@@ -1,7 +1,9 @@
 window.addEventListener("DOMContentLoaded", function() {
   var grid = document.getElementById("grid");
   var player = document.getElementById("player");
-  
+  var infoBox = document.getElementById("infoBox");
+  var innerBox = document.getElementById("innerBox");
+
   // Agregar jugador
   player.style.left = "20px"; // Ubicación inicial en la celda 1
   player.style.top = "20px"; // Ubicación inicial en la celda 1
@@ -19,6 +21,12 @@ window.addEventListener("DOMContentLoaded", function() {
 
   // Tamaño del jugador
   var playerSize = 20;
+
+  // Actualizar la información del cuadro interno
+  function updateInfoBox() {
+    var currentCell = Math.floor(playerPositionY / gridSize) * gridWidth / gridSize + Math.floor(playerPositionX / gridSize) + 1;
+    innerBox.innerText = currentCell;
+  }
 
   // Función para mover al jugador
   function movePlayer(event) {
@@ -51,79 +59,13 @@ window.addEventListener("DOMContentLoaded", function() {
     // Actualizar posición del jugador
     player.style.left = playerPositionX + "px";
     player.style.top = playerPositionY + "px";
+
+    // Actualizar la información del cuadro interno
+    updateInfoBox();
   }
 
   // Agregar el evento de escucha para las teclas de flecha
   document.addEventListener("keydown", movePlayer);
-  
-  
-  
-  
-  
-  // Función para mover al jugador en respuesta al toque en una celda
-function movePlayerOnTouch(event) {
-  var touch = event.touches[0];
-  var target = document.elementFromPoint(touch.clientX, touch.clientY);
-
-  if (!target.classList.contains("cell")) {
-    return;
-  }
-
-  // Obtener la posición de la celda tocada
-  var cellIndex = Array.from(target.parentNode.children).indexOf(target);
-  var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
-
-  // Calcular la posición absoluta del jugador en la celda tocada
-  var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
-  var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
-
-  // Calcular la diferencia de posición entre el jugador y la celda tocada
-  var playerDeltaX = playerPositionAbsoluteX - playerPositionX;
-  var playerDeltaY = playerPositionAbsoluteY - playerPositionY;
-
-  // Definir la velocidad de movimiento del jugador
-  var playerSpeed = 4;
-
-  // Calcular el número de pasos para llegar a la celda tocada
-  var stepsX = Math.abs(Math.round(playerDeltaX / playerSpeed));
-  var stepsY = Math.abs(Math.round(playerDeltaY / playerSpeed));
-
-  // Determinar la dirección de movimiento en los ejes X e Y
-  var stepX = playerDeltaX > 0 ? playerSpeed : -playerSpeed;
-  var stepY = playerDeltaY > 0 ? playerSpeed : -playerSpeed;
-
-  // Mover al jugador gradualmente hacia la celda tocada
-  var currentSteps = 0;
-  var moveInterval = setInterval(function() {
-    if (currentSteps < stepsX) {
-      playerPositionX += stepX;
-      currentSteps++;
-    }
-
-    if (currentSteps < stepsY) {
-      playerPositionY += stepY;
-      currentSteps++;
-    }
-
-    player.style.left = playerPositionX + "px";
-    player.style.top = playerPositionY + "px";
-
-    if (currentSteps >= stepsX && currentSteps >= stepsY) {
-      clearInterval(moveInterval);
-    }
-  }, 10); // Intervalo de movimiento en milisegundos
-}
-
-// Agregar evento de escucha para el toque en una celda
-grid.addEventListener("touchstart", movePlayerOnTouch);
-
-
-  
-  
-  
-  
-  
-  
 
   // Generar celdas de la cuadrícula
   for (var i = 0; i < 400; i++) {
@@ -152,4 +94,7 @@ grid.addEventListener("touchstart", movePlayerOnTouch);
       this.classList.remove("highlight"); // Remueve la clase "highlight" al quitar el cursor
     });
   }
+
+  // Actualizar la información del cuadro interno inicialmente
+  updateInfoBox();
 });

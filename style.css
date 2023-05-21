@@ -142,3 +142,44 @@
   background-color: black;
   z-index: 1;
 }
+
+/* Estilos contenedor padre */
+.info-box {
+  position: absolute;
+  top: 0;
+  right: 100px;
+  width: 100px; /* Ajusta el valor para mover el cuadro hacia la izquierda */
+  height: 200px;
+  border: 1px solid red;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilos contenedor hijo 1 */
+.inner-box {
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+/* Estilos contenedor hijo 2 */
+.inner-box-second {
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
