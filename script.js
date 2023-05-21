@@ -74,35 +74,49 @@ function movePlayerOnTouch(event) {
   var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
 
   // Calcular la posición absoluta del jugador en la celda tocada
-  var playerPositionAbsoluteX = cellIndex * gridSize;
-  var playerPositionAbsoluteY = rowIndex * gridSize;
+  var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
+  var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
 
   // Calcular la diferencia de posición entre el jugador y la celda tocada
   var playerDeltaX = playerPositionAbsoluteX - playerPositionX;
   var playerDeltaY = playerPositionAbsoluteY - playerPositionY;
 
-  // Mover al jugador gradualmente hacia la celda tocada
-  var stepX = playerDeltaX / animationFrames;
-  var stepY = playerDeltaY / animationFrames;
-  var frame = 0;
+  // Definir la velocidad de movimiento del jugador
+  var playerSpeed = 4;
 
+  // Calcular el número de pasos para llegar a la celda tocada
+  var stepsX = Math.abs(Math.round(playerDeltaX / playerSpeed));
+  var stepsY = Math.abs(Math.round(playerDeltaY / playerSpeed));
+
+  // Determinar la dirección de movimiento en los ejes X e Y
+  var stepX = playerDeltaX > 0 ? playerSpeed : -playerSpeed;
+  var stepY = playerDeltaY > 0 ? playerSpeed : -playerSpeed;
+
+  // Mover al jugador gradualmente hacia la celda tocada
+  var currentSteps = 0;
   var moveInterval = setInterval(function() {
-    playerPositionX += stepX;
-    playerPositionY += stepY;
+    if (currentSteps < stepsX) {
+      playerPositionX += stepX;
+      currentSteps++;
+    }
+
+    if (currentSteps < stepsY) {
+      playerPositionY += stepY;
+      currentSteps++;
+    }
 
     player.style.left = playerPositionX + "px";
     player.style.top = playerPositionY + "px";
 
-    frame++;
-
-    if (frame === animationFrames) {
+    if (currentSteps >= stepsX && currentSteps >= stepsY) {
       clearInterval(moveInterval);
     }
-  }, animationDuration / animationFrames);
+  }, 10); // Intervalo de movimiento en milisegundos
 }
 
 // Agregar evento de escucha para el toque en una celda
 grid.addEventListener("touchstart", movePlayerOnTouch);
+
 
   
   
