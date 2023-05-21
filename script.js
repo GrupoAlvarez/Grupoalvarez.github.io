@@ -73,21 +73,37 @@ function movePlayerOnTouch(event) {
   var cellIndex = Array.from(target.parentNode.children).indexOf(target);
   var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
 
-  // Calcular la posición absoluta del jugador en el centro de la celda
-  var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
-  var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
+  // Calcular la posición absoluta del jugador en la celda tocada
+  var playerPositionAbsoluteX = cellIndex * gridSize;
+  var playerPositionAbsoluteY = rowIndex * gridSize;
 
-  // Mover al jugador a la posición de la celda tocada
-  player.style.left = playerPositionAbsoluteX + "px";
-  player.style.top = playerPositionAbsoluteY + "px";
+  // Calcular la diferencia de posición entre el jugador y la celda tocada
+  var playerDeltaX = playerPositionAbsoluteX - playerPositionX;
+  var playerDeltaY = playerPositionAbsoluteY - playerPositionY;
 
-  // Actualizar la posición del jugador
-  playerPositionX = playerPositionAbsoluteX;
-  playerPositionY = playerPositionAbsoluteY;
+  // Mover al jugador gradualmente hacia la celda tocada
+  var stepX = playerDeltaX / animationFrames;
+  var stepY = playerDeltaY / animationFrames;
+  var frame = 0;
+
+  var moveInterval = setInterval(function() {
+    playerPositionX += stepX;
+    playerPositionY += stepY;
+
+    player.style.left = playerPositionX + "px";
+    player.style.top = playerPositionY + "px";
+
+    frame++;
+
+    if (frame === animationFrames) {
+      clearInterval(moveInterval);
+    }
+  }, animationDuration / animationFrames);
 }
 
 // Agregar evento de escucha para el toque en una celda
 grid.addEventListener("touchstart", movePlayerOnTouch);
+
   
   
   
