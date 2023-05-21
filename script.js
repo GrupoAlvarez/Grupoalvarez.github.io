@@ -80,10 +80,10 @@ window.addEventListener("DOMContentLoaded", function() {
     var targetCell = grid.children[cellIndex];
 
     // Calcular la posición absoluta de la celda tocada
-    var playerPositionAbsoluteX = colIndex * gridSize;
-    var playerPositionAbsoluteY = rowIndex * gridSize;
+    var playerPositionAbsoluteX = colIndex * gridSize + (gridSize - playerSize) / 2;
+    var playerPositionAbsoluteY = rowIndex * gridSize + (gridSize - playerSize) / 2;
 
-    // Mover al jugador a la posición de la celda tocada
+    // Mover al jugador al centro de la celda tocada
     player.style.left = playerPositionAbsoluteX + "px";
     player.style.top = playerPositionAbsoluteY + "px";
 
