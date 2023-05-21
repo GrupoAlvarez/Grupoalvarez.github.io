@@ -57,16 +57,30 @@ window.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("keydown", movePlayer);
   
   // Aqui empiezan las funciones tactiles
-  // Función para mover al jugador en respuesta al toque en una celda
+  // Función para mover al jugador al tocar una celda en el dispositivo móvil
   function movePlayerOnTouch(event) {
-    var target = event.target;
+    // Obtener el objeto de evento del toque
+    var touch = event.touches[0];
 
-    // Obtener la posición de la celda tocada
-    var cellIndex = Array.from(target.parentNode.children).indexOf(target);
-    var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+    // Obtener la posición absoluta del grid
+    var gridRect = grid.getBoundingClientRect();
+    var gridOffsetX = gridRect.left;
+    var gridOffsetY = gridRect.top;
 
-    // Calcular la posición absoluta del jugador
-    var playerPositionAbsoluteX = cellIndex * gridSize;
+    // Obtener la posición táctil relativa al grid
+    var touchX = touch.clientX - gridOffsetX;
+    var touchY = touch.clientY - gridOffsetY;
+
+    // Calcular la fila y columna de la celda tocada
+    var rowIndex = Math.floor(touchY / gridSize);
+    var colIndex = Math.floor(touchX / gridSize);
+
+    // Obtener la celda tocada
+    var cellIndex = rowIndex * gridWidth + colIndex;
+    var targetCell = grid.children[cellIndex];
+
+    // Calcular la posición absoluta de la celda tocada
+    var playerPositionAbsoluteX = colIndex * gridSize;
     var playerPositionAbsoluteY = rowIndex * gridSize;
 
     // Mover al jugador a la posición de la celda tocada
@@ -80,6 +94,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
   // Agregar evento de escucha para el toque en una celda
   grid.addEventListener("touchstart", movePlayerOnTouch);
+ 
   
   
   
