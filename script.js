@@ -2,10 +2,7 @@ window.addEventListener("DOMContentLoaded", function() {
   var grid = document.getElementById("grid");
   var player = document.getElementById("player");
   
-  
-  
-  
-   // Agregar jugador
+  // Agregar jugador
   player.style.left = "20px"; // Ubicación inicial en la celda 1
   player.style.top = "20px"; // Ubicación inicial en la celda 1
 
@@ -19,6 +16,9 @@ window.addEventListener("DOMContentLoaded", function() {
   // Tamaño de la cuadrícula
   var gridWidth = 20;
   var gridHeight = 20;
+
+  // Tamaño del jugador
+  var playerSize = 20;
 
   // Función para mover al jugador
   function movePlayer(event) {
@@ -56,36 +56,46 @@ window.addEventListener("DOMContentLoaded", function() {
   // Agregar el evento de escucha para las teclas de flecha
   document.addEventListener("keydown", movePlayer);
   
-  // Aqui empiezan las funciones tactiles
+  
+  
+  
+  
   // Función para mover al jugador en respuesta al toque en una celda
-function movePlayerOnTouch(event) {
-  var target = event.target;
+  function movePlayerOnTouch(event) {
+    var touch = event.touches[0];
+    var target = document.elementFromPoint(touch.clientX, touch.clientY);
 
-  // Obtener la posición de la celda tocada
-  var cellIndex = Array.from(target.parentNode.children).indexOf(target);
-  var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+    if (!target.classList.contains("cell")) {
+      return;
+    }
 
-  // Calcular la posición absoluta del jugador en el centro de la celda
-  var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
-  var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
+    // Obtener la posición de la celda tocada
+    var cellIndex = Array.from(target.parentNode.children).indexOf(target);
+    var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
 
-  // Mover al jugador a la posición de la celda tocada
-  player.style.left = playerPositionAbsoluteX + "px";
-  player.style.top = playerPositionAbsoluteY + "px";
+    // Calcular la posición absoluta del jugador en el centro de la celda
+    var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
+    var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
 
-  // Actualizar la posición del jugador
-  playerPositionX = playerPositionAbsoluteX;
-  playerPositionY = playerPositionAbsoluteY;
-}
+    // Mover al jugador a la posición de la celda tocada
+    player.style.left = playerPositionAbsoluteX + "px";
+    player.style.top = playerPositionAbsoluteY + "px";
 
-// Agregar evento de escucha para el toque en una celda
-grid.addEventListener("touchstart", movePlayerOnTouch);
- 
+    // Actualizar la posición del jugador
+    playerPositionX = playerPositionAbsoluteX;
+    playerPositionY = playerPositionAbsoluteY;
+  }
+
+  // Agregar evento de escucha para el toque en una celda
+  grid.addEventListener("touchstart", movePlayerOnTouch);
   
   
   
   
   
+  
+  
+
   // Generar celdas de la cuadrícula
   for (var i = 0; i < 400; i++) {
     var cell = document.createElement("div");
