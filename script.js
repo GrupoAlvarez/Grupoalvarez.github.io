@@ -57,43 +57,29 @@ window.addEventListener("DOMContentLoaded", function() {
   document.addEventListener("keydown", movePlayer);
   
   // Aqui empiezan las funciones tactiles
-  // Función para mover al jugador al tocar una celda en el dispositivo móvil
-  function movePlayerOnTouch(event) {
-    // Obtener el objeto de evento del toque
-    var touch = event.touches[0];
+  // Función para mover al jugador en respuesta al toque en una celda
+function movePlayerOnTouch(event) {
+  var target = event.target;
 
-    // Obtener la posición absoluta del grid
-    var gridRect = grid.getBoundingClientRect();
-    var gridOffsetX = gridRect.left;
-    var gridOffsetY = gridRect.top;
+  // Obtener la posición de la celda tocada
+  var cellIndex = Array.from(target.parentNode.children).indexOf(target);
+  var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
 
-    // Obtener la posición táctil relativa al grid
-    var touchX = touch.clientX - gridOffsetX;
-    var touchY = touch.clientY - gridOffsetY;
+  // Calcular la posición absoluta del jugador en el centro de la celda
+  var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
+  var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
 
-    // Calcular la fila y columna de la celda tocada
-    var rowIndex = Math.floor(touchY / gridSize);
-    var colIndex = Math.floor(touchX / gridSize);
+  // Mover al jugador a la posición de la celda tocada
+  player.style.left = playerPositionAbsoluteX + "px";
+  player.style.top = playerPositionAbsoluteY + "px";
 
-    // Obtener la celda tocada
-    var cellIndex = rowIndex * gridWidth + colIndex;
-    var targetCell = grid.children[cellIndex];
+  // Actualizar la posición del jugador
+  playerPositionX = playerPositionAbsoluteX;
+  playerPositionY = playerPositionAbsoluteY;
+}
 
-    // Calcular la posición absoluta de la celda tocada
-    var playerPositionAbsoluteX = colIndex * gridSize + (gridSize - playerSize) / 2;
-    var playerPositionAbsoluteY = rowIndex * gridSize + (gridSize - playerSize) / 2;
-
-    // Mover al jugador al centro de la celda tocada
-    player.style.left = playerPositionAbsoluteX + "px";
-    player.style.top = playerPositionAbsoluteY + "px";
-
-    // Actualizar la posición del jugador
-    playerPositionX = playerPositionAbsoluteX;
-    playerPositionY = playerPositionAbsoluteY;
-  }
-
-  // Agregar evento de escucha para el toque en una celda
-  grid.addEventListener("touchstart", movePlayerOnTouch);
+// Agregar evento de escucha para el toque en una celda
+grid.addEventListener("touchstart", movePlayerOnTouch);
  
   
   
