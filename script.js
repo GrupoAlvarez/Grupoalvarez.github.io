@@ -61,34 +61,33 @@ window.addEventListener("DOMContentLoaded", function() {
   
   
   // Función para mover al jugador en respuesta al toque en una celda
-  function movePlayerOnTouch(event) {
-    var touch = event.touches[0];
-    var target = document.elementFromPoint(touch.clientX, touch.clientY);
+function movePlayerOnTouch(event) {
+  var touch = event.touches[0];
+  var target = document.elementFromPoint(touch.clientX, touch.clientY);
 
-    if (!target.classList.contains("cell")) {
-      return;
-    }
-
-    // Obtener la posición de la celda tocada
-    var cellIndex = Array.from(target.parentNode.children).indexOf(target);
-    var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
-
-    // Calcular la posición absoluta del jugador en el centro de la celda
-    var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
-    var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
-
-    // Mover al jugador a la posición de la celda tocada
-    player.style.left = playerPositionAbsoluteX + "px";
-    player.style.top = playerPositionAbsoluteY + "px";
-
-    // Actualizar la posición del jugador
-    playerPositionX = playerPositionAbsoluteX;
-    playerPositionY = playerPositionAbsoluteY;
+  if (!target.classList.contains("cell")) {
+    return;
   }
 
-  // Agregar evento de escucha para el toque en una celda
-  grid.addEventListener("touchstart", movePlayerOnTouch);
-  
+  // Obtener la posición de la celda tocada
+  var cellIndex = Array.from(target.parentNode.children).indexOf(target);
+  var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+
+  // Calcular la posición absoluta del jugador en el centro de la celda
+  var playerPositionAbsoluteX = cellIndex * gridSize + gridSize / 2 - playerSize / 2;
+  var playerPositionAbsoluteY = rowIndex * gridSize + gridSize / 2 - playerSize / 2;
+
+  // Mover al jugador a la posición de la celda tocada
+  player.style.left = playerPositionAbsoluteX + "px";
+  player.style.top = playerPositionAbsoluteY + "px";
+
+  // Actualizar la posición del jugador
+  playerPositionX = playerPositionAbsoluteX;
+  playerPositionY = playerPositionAbsoluteY;
+}
+
+// Agregar evento de escucha para el toque en una celda
+grid.addEventListener("touchstart", movePlayerOnTouch);
   
   
   
