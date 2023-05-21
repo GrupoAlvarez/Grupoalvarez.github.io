@@ -1,3 +1,22 @@
+body {
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url("campo1.jpg"); /* Reemplaza "nombre-de-la-imagen.jpg" con la ruta y nombre de tu imagen de fondo */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1; /* Ajusta el valor de opacidad según tus preferencias (0.0 a 1.0) */
+}
+
 /* Estilos de la cuadrícula */
 #grid {
   display: grid;
@@ -6,6 +25,10 @@
   width: 800px;
   height: 800px;
   border: 1px solid black;
+  position: relative;
+  z-index: 2; /* Cambiamos el valor de z-index a 2 */
+  -webkit-mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)); /* Color de máscara negro */
+  mask-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
 }
 
 /* Estilos de las celdas */
@@ -20,13 +43,12 @@
 
 /* Definición de la variable para la opacidad del color de todas las celdas*/
 :root {
-  --grid-background-opacity: 1; /* Cambia este valor para ajustar la opacidad */
-  --group-opacity: 0.2;
+  --group-opacity: 0.5;
 }
 
 /* Hace el texto invisible esto modifica los numeros que hay en las celdas*/
 .hidden {
-  color: transparent; 
+  color: transparent;
 }
 
 /* Estilos para los grupos de cuadros */
@@ -140,7 +162,10 @@
   width: 20px;
   height: 20px;
   background-color: black;
-  z-index: 1;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* Estilos contenedor padre */
@@ -149,7 +174,7 @@
   top: 0;
   right: 100px;
   width: 100px; /* Ajusta el valor para mover el cuadro hacia la izquierda */
-  height: 200px;
+  height: 290px;
   border: 1px solid red;
   background-color: white;
   display: flex;
@@ -183,3 +208,16 @@
   font-size: 22px;
   margin-bottom: 10px;
 }
+
+.inner-box-tercero {
+  width: 80px;
+  height: 80px;
+  border: 1px solid black;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+

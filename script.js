@@ -19,13 +19,15 @@ window.addEventListener("DOMContentLoaded", function() {
   var gridWidth = 20;
   var gridHeight = 20;
 
-  // Tamaño del jugador
-  var playerSize = 20;
+  // Obtener el número de la celda actual
+  function getCurrentCellNumber() {
+    var currentCell = Math.floor(playerPositionY / gridSize) * gridWidth + Math.floor(playerPositionX / gridSize) + 1;
+    return currentCell;
+  }
 
   // Actualizar la información del cuadro interno
   function updateInfoBox() {
-    var currentCell = Math.floor(playerPositionY / gridSize) * gridWidth / gridSize + Math.floor(playerPositionX / gridSize) + 1;
-    innerBox.innerText = currentCell;
+    innerBox.innerText = getCurrentCellNumber();
   }
 
   // Función para mover al jugador
@@ -73,6 +75,8 @@ window.addEventListener("DOMContentLoaded", function() {
     cell.classList.add("cell");
     cell.innerText = i + 1;
     cell.classList.add("hidden");
+    cell.style.left = ((i % 20) * gridSize) + "px";
+    cell.style.top = (Math.floor(i / 20) * gridSize) + "px";
     grid.appendChild(cell);
 
     var row = Math.floor(i / 20);
