@@ -56,6 +56,32 @@ window.addEventListener("DOMContentLoaded", function() {
   // Agregar el evento de escucha para las teclas de flecha
   document.addEventListener("keydown", movePlayer);
   
+  // Aqui empiezan las funciones tactiles
+  // Función para mover al jugador en respuesta al toque en una celda
+  function movePlayerOnTouch(event) {
+    var target = event.target;
+
+    // Obtener la posición de la celda tocada
+    var cellIndex = Array.from(target.parentNode.children).indexOf(target);
+    var rowIndex = Array.from(target.parentNode.parentNode.children).indexOf(target.parentNode);
+
+    // Calcular la posición absoluta del jugador
+    var playerPositionAbsoluteX = cellIndex * gridSize;
+    var playerPositionAbsoluteY = rowIndex * gridSize;
+
+    // Mover al jugador a la posición de la celda tocada
+    player.style.left = playerPositionAbsoluteX + "px";
+    player.style.top = playerPositionAbsoluteY + "px";
+
+    // Actualizar la posición del jugador
+    playerPositionX = playerPositionAbsoluteX;
+    playerPositionY = playerPositionAbsoluteY;
+  }
+
+  // Agregar evento de escucha para el toque en una celda
+  grid.addEventListener("touchstart", movePlayerOnTouch);
+  
+  
   
   
   
