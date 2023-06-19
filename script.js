@@ -21,6 +21,35 @@ window.addEventListener("DOMContentLoaded", function() {
   var gridWidth = 20;
   var gridHeight = 20;
 
+  // Nombres de los grupos
+  var groupNames = [
+    "Camelot",
+    "Avalon",
+    "Tintagel",
+    "Glastonbury",
+    "Lyonesse",
+    "Winchester",
+    "Londres",
+    "Carlisle",
+    "Caerleon",
+    "Joya del Río",
+    "Corbenic",
+    "Alnwick",
+    "Orkney",
+    "Montaña Blanca",
+    "Isla de San Brandán",
+    "Brocéliande",
+    "Caerwent",
+    "Montañas de Cumberland",
+    "Silchester",
+    "Colina de Berwyn",
+    "Abbadon",
+    "Isla de Glass",
+    "Orkeny",
+    "Ascalón",
+    "Carduel"
+  ];
+
   // Obtener el número de la celda actual
   function getCurrentCellNumber() {
     var currentCell = Math.floor(playerPositionY / gridSize) * gridWidth + Math.floor(playerPositionX / gridSize) + 1;
@@ -92,7 +121,12 @@ window.addEventListener("DOMContentLoaded", function() {
   // Actualizar la información del cuadro interno
   function updateInfoBox() {
     innerBoxSecond.innerText = getCurrentCellNumber();
-    innerBoxTercero.innerText = getCurrentGroupNumber();
+    var groupNumber = getCurrentGroupNumber();
+    if (groupNumber !== null) {
+      innerBoxTercero.innerText = groupNames[groupNumber - 1];
+    } else {
+      innerBoxTercero.innerText = "Sin grupo";
+    }
   }
 
   // Función para mover al jugador
