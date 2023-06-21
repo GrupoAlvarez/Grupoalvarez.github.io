@@ -5,6 +5,8 @@ window.addEventListener("DOMContentLoaded", function() {
   var innerBox = document.getElementById("innerBox");
   var innerBoxSecond = document.getElementById("innerBoxSecond");
   var innerBoxTercero = document.getElementById("innerBoxTercero");
+  var popup = document.getElementById("popup");
+  var btnClosePopup = document.getElementById("btnClosePopup");
 
   // Agregar jugador
   player.style.left = "20px"; // Ubicación inicial en la celda 1
@@ -113,7 +115,8 @@ window.addEventListener("DOMContentLoaded", function() {
     } else if ([337, 338, 339, 340, 357, 358, 359, 360, 377, 378, 379, 380, 397, 398, 399, 400].includes(currentCell)) {
       group = 25;
     }
-    // Agrega las condiciones para los otros grupos según la división que hayas establecido
+    
+    // Este montón de números son los que indican cómo se organizan los grupos
 
     return group;
   }
@@ -127,6 +130,20 @@ window.addEventListener("DOMContentLoaded", function() {
     } else {
       innerBoxTercero.innerText = "Sin grupo";
     }
+  }
+
+  // Función para mostrar el cuadro emergente
+  function showPopup() {
+    popup.style.display = "block";
+    // Bloquear el movimiento del personaje
+    document.removeEventListener("keydown", movePlayer);
+  }
+
+  // Función para ocultar el cuadro emergente
+  function hidePopup() {
+    popup.style.display = "none";
+    // Permitir el movimiento del personaje nuevamente
+    document.addEventListener("keydown", movePlayer);
   }
 
   // Función para mover al jugador
@@ -162,10 +179,16 @@ window.addEventListener("DOMContentLoaded", function() {
 
     // Actualizar la información del cuadro interno
     updateInfoBox();
+
+    // Mostrar el cuadro emergente cuando el personaje se mueva
+    showPopup();
   }
 
   // Agregar el evento de escucha para las teclas de flecha
   document.addEventListener("keydown", movePlayer);
+
+  // Agrega un evento de clic al botón "Cerrar" para ocultar el cuadro emergente
+  btnClosePopup.addEventListener("click", hidePopup);
 
   // Generar celdas de la cuadrícula
   for (var i = 0; i < 400; i++) {
@@ -199,4 +222,7 @@ window.addEventListener("DOMContentLoaded", function() {
 
   // Actualizar la información del cuadro interno inicialmente
   updateInfoBox();
+
+  // Ocultar el cuadro emergente al cargar la página
+  popup.style.display = "none";
 });
