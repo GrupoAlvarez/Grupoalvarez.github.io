@@ -158,50 +158,56 @@ function movePlayer(event) {
 
   // Verificar si el jugador intenta moverse a una celda bloqueada
   if (
-    key === "ArrowUp" &&
+    (key === "ArrowUp" || key === "w") &&
     blockedCells.includes(targetCell - gridWidth)
   ) {
     return; // No permitir el movimiento hacia arriba
   } else if (
-    key === "ArrowDown" &&
+    (key === "ArrowDown" || key === "s") &&
     blockedCells.includes(targetCell + gridWidth)
   ) {
     return; // No permitir el movimiento hacia abajo
   } else if (
-    key === "ArrowLeft" &&
+    (key === "ArrowLeft" || key === "a") &&
     blockedCells.includes(targetCell - 1)
   ) {
     return; // No permitir el movimiento hacia la izquierda
   } else if (
-    key === "ArrowRight" &&
+    (key === "ArrowRight" || key === "d") &&
     blockedCells.includes(targetCell + 1)
   ) {
     return; // No permitir el movimiento hacia la derecha
   }
+  
 
   // Resto del código para mover al jugador y actualizar la posición
-  switch (key) {
-    case "ArrowUp":
-      if (playerPositionY > gridSize) {
-        playerPositionY -= gridSize;
-      }
-      break;
-    case "ArrowDown":
-      if (playerPositionY < (gridHeight - 1) * gridSize) {
-        playerPositionY += gridSize;
-      }
-      break;
-    case "ArrowLeft":
-      if (playerPositionX > gridSize) {
-        playerPositionX -= gridSize;
-      }
-      break;
-    case "ArrowRight":
-      if (playerPositionX < (gridWidth - 1) * gridSize) {
-        playerPositionX += gridSize;
-      }
-      break;
-  }
+switch (key) {
+  case "ArrowUp":
+  case "w":
+    if (playerPositionY > gridSize) {
+      playerPositionY -= gridSize;
+    }
+    break;
+  case "ArrowDown":
+  case "s":
+    if (playerPositionY < (gridHeight - 1) * gridSize) {
+      playerPositionY += gridSize;
+    }
+    break;
+  case "ArrowLeft":
+  case "a":
+    if (playerPositionX > gridSize) {
+      playerPositionX -= gridSize;
+    }
+    break;
+  case "ArrowRight":
+  case "d":
+    if (playerPositionX < (gridWidth - 1) * gridSize) {
+      playerPositionX += gridSize;
+    }
+    break;
+}
+
 
   // Actualizar posición del jugador
   player.style.left = playerPositionX + "px";
