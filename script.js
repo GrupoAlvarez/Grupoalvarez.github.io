@@ -146,43 +146,80 @@ window.addEventListener("DOMContentLoaded", function() {
     document.addEventListener("keydown", movePlayer);
   }
 
-  // Función para mover al jugador
-  function movePlayer(event) {
-    // Movimiento según la tecla presionada
-    var key = event.key;
-    switch (key) {
-      case "ArrowUp":
-        if (playerPositionY > gridSize) {
-          playerPositionY -= gridSize;
-        }
-        break;
-      case "ArrowDown":
-        if (playerPositionY < (gridHeight - 1) * gridSize) {
-          playerPositionY += gridSize;
-        }
-        break;
-      case "ArrowLeft":
-        if (playerPositionX > gridSize) {
-          playerPositionX -= gridSize;
-        }
-        break;
-      case "ArrowRight":
-        if (playerPositionX < (gridWidth - 1) * gridSize) {
-          playerPositionX += gridSize;
-        }
-        break;
-    }
 
-    // Actualizar posición del jugador
-    player.style.left = playerPositionX + "px";
-    player.style.top = playerPositionY + "px";
 
-    // Actualizar la información del cuadro interno
-    updateInfoBox();
 
-    // Mostrar el cuadro emergente cuando el personaje se mueva
-    showPopup();
+ // Función para mover al jugador
+function movePlayer(event) {
+  // Movimiento según la tecla presionada
+  var key = event.key;
+  var targetCell = getCurrentCellNumber(); // Obtener la celda actual del jugador
+  var blockedCells = [35, 55, 30]; // Números de las celdas bloqueadas
+
+  // Verificar si el jugador intenta moverse a una celda bloqueada
+  if (
+    key === "ArrowUp" &&
+    blockedCells.includes(targetCell - gridWidth)
+  ) {
+    return; // No permitir el movimiento hacia arriba
+  } else if (
+    key === "ArrowDown" &&
+    blockedCells.includes(targetCell + gridWidth)
+  ) {
+    return; // No permitir el movimiento hacia abajo
+  } else if (
+    key === "ArrowLeft" &&
+    blockedCells.includes(targetCell - 1)
+  ) {
+    return; // No permitir el movimiento hacia la izquierda
+  } else if (
+    key === "ArrowRight" &&
+    blockedCells.includes(targetCell + 1)
+  ) {
+    return; // No permitir el movimiento hacia la derecha
   }
+
+  // Resto del código para mover al jugador y actualizar la posición
+  switch (key) {
+    case "ArrowUp":
+      if (playerPositionY > gridSize) {
+        playerPositionY -= gridSize;
+      }
+      break;
+    case "ArrowDown":
+      if (playerPositionY < (gridHeight - 1) * gridSize) {
+        playerPositionY += gridSize;
+      }
+      break;
+    case "ArrowLeft":
+      if (playerPositionX > gridSize) {
+        playerPositionX -= gridSize;
+      }
+      break;
+    case "ArrowRight":
+      if (playerPositionX < (gridWidth - 1) * gridSize) {
+        playerPositionX += gridSize;
+      }
+      break;
+  }
+
+  // Actualizar posición del jugador
+  player.style.left = playerPositionX + "px";
+  player.style.top = playerPositionY + "px";
+
+  // Actualizar la información del cuadro interno
+  updateInfoBox();
+
+  // Mostrar el cuadro emergente cuando el personaje se mueva
+  showPopup();
+}
+
+
+
+
+
+
+
 
   // Agregar el evento de escucha para las teclas de flecha
   document.addEventListener("keydown", movePlayer);

@@ -299,7 +299,7 @@ body::before {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 300px;
-  height: 300px;
+  height: 320px;
   border: 2px solid black;
   background-color: white;
   display: flex;
@@ -346,6 +346,12 @@ body::before {
 
 /* Estilos para el botón "Pelear" */
 #btnpelear {
+  background-color: #f0f0f0; /* Cambia el color de fondo */
+  color: black; /* Cambia el color del texto */
+}
+
+/* Estilos para el botón "Descanzar" */
+#btndescanzar {
   background-color: #f0f0f0; /* Cambia el color de fondo */
   color: black; /* Cambia el color del texto */
 }
