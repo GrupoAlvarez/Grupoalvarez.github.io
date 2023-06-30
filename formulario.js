@@ -18,7 +18,7 @@ function redirigirPaginaInicio() {
 }
 
 function redirigirPaginaCorrecto() {
-  window.location.href = 'iniciorol.html';
+  window.location.href = 'iniciorol.php';
 }
 
 // Limpiar los campos de escritura al cargar la página

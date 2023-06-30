@@ -121,6 +121,9 @@ window.addEventListener("DOMContentLoaded", function() {
     return group;
   }
 
+
+
+
   // Actualizar la información del cuadro interno
   function updateInfoBox() {
     innerBoxSecond.innerText = getCurrentCellNumber();
@@ -131,6 +134,8 @@ window.addEventListener("DOMContentLoaded", function() {
       innerBoxTercero.innerText = "Sin grupo";
     }
   }
+
+  
 
   // Función para mostrar el cuadro emergente
   function showPopup() {
